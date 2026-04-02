@@ -56,7 +56,7 @@ function RoleCard({ title, name, children, tag, open }) {
   )
 }
 
-function MobileDrawer({ isOpen, onClose, links }) {
+function MobileDrawer({ isOpen, onClose, links, activeSection }) {
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -71,7 +71,7 @@ function MobileDrawer({ isOpen, onClose, links }) {
         </div>
         <nav className="dr__nav">
           {links.map(([href, label]) => (
-            <a key={href} href={href} className="dr__link" onClick={onClose}>{label}</a>
+            <a key={href} href={href} className={`dr__link${activeSection === href.slice(1) ? ' dr__link--active' : ''}`} onClick={onClose}>{label}</a>
           ))}
         </nav>
         <div className="dr__foot"><span>{REGION}</span></div>
@@ -84,6 +84,7 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [showTop, setShowTop] = useState(false)
+  const [activeSection, setActiveSection] = useState('')
   const toggleDrawer = useCallback(() => setDrawerOpen(p => !p), [])
   const closeDrawer = useCallback(() => setDrawerOpen(false), [])
 
@@ -91,6 +92,21 @@ export default function App() {
     const fn = () => { setScrolled(window.scrollY > 60); setShowTop(window.scrollY > 800) }
     window.addEventListener('scroll', fn, { passive: true })
     return () => window.removeEventListener('scroll', fn)
+  }, [])
+
+  useEffect(() => {
+    const sections = document.querySelectorAll('.s[id]')
+    if (!sections.length) return
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection((prev) => prev === entry.target.id ? prev : entry.target.id)
+        })
+      },
+      { rootMargin: '-80px 0px -50% 0px', threshold: 0 }
+    )
+    sections.forEach((s) => observer.observe(s))
+    return () => observer.disconnect()
   }, [])
   useEffect(() => {
     const fn = (e) => { if (e.key === 'Escape') closeDrawer() }
@@ -111,13 +127,13 @@ export default function App() {
 
       <header className={`nav ${scrolled ? 'nav--s' : ''}`}>
         <a href="#" className="nav__brand">{VENTURE_NAME}</a>
-        <ul className="nav__links">{NAV.map(([h,l])=>(<li key={h}><a href={h}>{l}</a></li>))}</ul>
+        <ul className="nav__links">{NAV.map(([h,l])=>(<li key={h}><a href={h} className={activeSection === h.slice(1) ? 'nav__link--active' : ''}>{l}</a></li>))}</ul>
         <button className="nav__burger" onClick={toggleDrawer} aria-label="Open menu" aria-expanded={drawerOpen}>
           <span /><span /><span />
         </button>
       </header>
 
-      <MobileDrawer isOpen={drawerOpen} onClose={closeDrawer} links={NAV} />
+      <MobileDrawer isOpen={drawerOpen} onClose={closeDrawer} links={NAV} activeSection={activeSection} />
 
       <div className="hero">
         <div className="hero__tex" aria-hidden="true" />
@@ -578,6 +594,7 @@ body{font-family:var(--sans);font-size:16px;color:var(--text);background:var(--c
 .nav__links{display:none;list-style:none;gap:.9rem}
 .nav__links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.7rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;transition:color .2s;padding:.3rem 0}
 .nav__links a:hover{color:var(--white)}
+.nav__links a.nav__link--active{color:var(--white);border-bottom:2px solid var(--clay);padding-bottom:.2rem}
 .nav__burger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;background:none;border:none;cursor:pointer;padding:10px;-webkit-tap-highlight-color:transparent}
 .nav__burger span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px;transition:transform .25s,opacity .25s}
 
@@ -592,6 +609,7 @@ body{font-family:var(--sans);font-size:16px;color:var(--text);background:var(--c
 .dr__nav{flex:1;display:flex;flex-direction:column;padding:1rem 0;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .dr__link{display:flex;align-items:center;padding:1rem 1.5rem;color:rgba(255,255,255,.8);text-decoration:none;font-size:1rem;font-weight:500;letter-spacing:.02em;transition:background .15s;min-height:48px}
 .dr__link:active{background:rgba(255,255,255,.06)}
+.dr__link--active{color:var(--white);background:rgba(255,255,255,.08);border-left:3px solid var(--clay)}
 .dr__foot{padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.08);font-size:.75rem;color:rgba(255,255,255,.35)}
 
 /* HERO */
@@ -610,7 +628,7 @@ body{font-family:var(--sans);font-size:16px;color:var(--text);background:var(--c
 @keyframes scrollDot{0%,100%{cy:8;opacity:1}50%{cy:18;opacity:.3}}
 
 /* SECTIONS */
-.s{padding:clamp(2.5rem,7vw,5rem) var(--pad);opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.s{padding:clamp(2.5rem,7vw,5rem) var(--pad);opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;scroll-margin-top:80px}
 .s--v{opacity:1;transform:translateY(0)}
 .s--d{background:var(--forest);color:var(--sand)}
 .s__i{max-width:var(--max-w);margin:0 auto}
