@@ -22,6 +22,58 @@ function useInView(threshold = 0.1) {
   return [ref, isVisible]
 }
 
+/* ─── Count-up animation hook ─── */
+function useCountUp(endValue, duration = 2000, threshold = 0.1) {
+  const ref = useRef(null)
+  const [display, setDisplay] = useState(0)
+  const started = useRef(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) {
+      setDisplay(endValue)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true
+          observer.unobserve(el)
+          const start = performance.now()
+          const easeOutQuart = t => 1 - Math.pow(1 - t, 4)
+          const step = now => {
+            const elapsed = now - start
+            const progress = Math.min(elapsed / duration, 1)
+            setDisplay(Math.round(easeOutQuart(progress) * endValue))
+            if (progress < 1) requestAnimationFrame(step)
+          }
+          requestAnimationFrame(step)
+        }
+      },
+      { threshold }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [endValue, duration, threshold])
+
+  return [ref, display]
+}
+
+/* ─── Animated stat counter ─── */
+function AnimatedStat({ prefix = '', endValue, suffix = '', label }) {
+  const [ref, display] = useCountUp(endValue)
+  return (
+    <div className="stat" ref={ref}>
+      <span className="stat__n">{prefix}{display}{suffix}</span>
+      <span className="stat__l">{label}</span>
+    </div>
+  )
+}
+
 function Section({ children, id, dark }) {
   const [ref, isVisible] = useInView()
   return (
@@ -164,10 +216,10 @@ export default function App() {
           <h2>Oregon needs this — right now.</h2>
           <p className="lead">ODOT's $4M/year highway cleanup contract expired mid-2025 after the legislature failed to pass a transportation funding package. Nearly 500 ODOT employees laid off. A statewide vacuum in roadside maintenance.</p>
           <div className="stats">
-            <Stat number="$250K" label="ODOT spent monthly on Clackamas/Multnomah cleanup"/>
-            <Stat number="240K lbs" label="Litter removed from metro highways in one year"/>
-            <Stat number="$20M" label="SB 5701 allocated for metro cleanup in 2024"/>
-            <Stat number="60 tons" label="Adopt-a-Road volunteers collect annually"/>
+            <AnimatedStat prefix="$" endValue={250} suffix="K" label="ODOT spent monthly on Clackamas/Multnomah cleanup"/>
+            <AnimatedStat endValue={240} suffix="K lbs" label="Litter removed from metro highways in one year"/>
+            <AnimatedStat prefix="$" endValue={20} suffix="M" label="SB 5701 allocated for metro cleanup in 2024"/>
+            <AnimatedStat endValue={60} suffix=" tons" label="Adopt-a-Road volunteers collect annually"/>
           </div>
           <p>Oregon City runs a Metro-funded Community Enhancement Grant with up to $400,000 annually for projects improving neighborhood safety, appearance, and cleanliness. Our work aligns directly with every stated priority.</p>
         </Section>
