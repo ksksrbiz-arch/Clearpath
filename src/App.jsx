@@ -253,15 +253,15 @@ export default function App() {
           <p className="lead">Build sequentially — each phase funds the next.</p>
           <div className="tl">
             {[
-              { phase:'Phase 1', when:'Now', title:'Foundation', text:'Register LLC/nonprofit. Secure equipment and insurance. Join Adopt-a-Road. Register on OregonBuys. Document first 5 sites with full before/after reports.' },
+              { phase:'Phase 1', when:'Now', title:'Foundation', active: true, text:'Register LLC/nonprofit. Secure equipment and insurance. Join Adopt-a-Road. Register on OregonBuys. Document first 5 sites with full before/after reports.' },
               { phase:'Phase 2', when:'Q3 2026', title:'Revenue', text:'Apply for Oregon City Enhancement Grant. Secure first private contracts (HOAs, property managers). Submit initial government RFP responses.' },
               { phase:'Phase 3', when:'2027', title:'Systems', text:'Formalize crew training. Build recurring contract base. Establish grant writing rhythm. Launch volunteer program through nonprofit arm.' },
               { phase:'Phase 4', when:'2028+', title:'Scale', text:'Bid on larger ODOT/Metro contracts. Hire seasonal crews. Add specialized services (invasive species, graffiti, remediation).' },
             ].map((item, i) => (
               <div key={i} className="tl__item">
-                <div className="tl__marker"><div className="tl__dot"/>{i<3&&<div className="tl__line"/>}</div>
+                <div className="tl__marker"><div className={`tl__dot${item.active?' tl__dot--active':''}`}/>{i<3&&<div className="tl__line"/>}</div>
                 <div className="tl__body">
-                  <span className="tl__when">{item.phase} · {item.when}</span>
+                  <span className="tl__when">{item.phase} · {item.when}{item.active&&<span className="tl__badge">In Progress</span>}</span>
                   <h3>{item.title}</h3>
                   <p>{item.text}</p>
                 </div>
@@ -741,6 +741,9 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .tl__line{width:1px;flex:1;background:rgba(255,255,255,.1);margin-top:.4rem}
 .tl__body{padding-bottom:1.5rem;flex:1}
 .tl__when{display:block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--clay);margin-bottom:.2rem}
+.tl__dot--active{width:14px;height:14px;background:var(--forest);box-shadow:0 0 0 4px rgba(122,158,126,.3);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+.tl__badge{display:inline-block;background:var(--forest);color:#fff;font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.15em .55em;border-radius:999px;margin-left:.5rem;vertical-align:middle}
 .tl__body h3{font-size:1.05rem;margin-bottom:.3rem}.tl__body p{font-size:.88rem;margin-bottom:0}
 
 /* BOUNDARY */
