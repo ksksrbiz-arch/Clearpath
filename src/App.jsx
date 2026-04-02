@@ -101,7 +101,8 @@ export default function App() {
   const NAV = [
     ['#mission','Mission'],['#opportunity','Opportunity'],['#model','Model'],['#structure','Structure'],
     ['#team','Team'],['#operations','Operations'],['#roadmap','Roadmap'],['#projections','Projections'],
-    ['#edge','Why Us'],['#boundaries','Boundaries'],['#costs','Costs'],['#invitation','Join'],
+    ['#edge','Why Us'],['#trust','Proof'],['#boundaries','Boundaries'],['#costs','Costs'],
+    ['#files','The Files'],['#invitation','Join'],
   ]
 
   return (
@@ -198,7 +199,7 @@ export default function App() {
           <p className="struct-note">Both entities share the same mission, team, and operational standards. The LLC contracts work; the nonprofit funds community programs and volunteer coordination. Revenue flows are kept separate with full transparency.</p>
         </Section>
 
-        <Section id="team" dark>
+        <Section id="team">
           <p className="label">Team & Roles</p><div className="divider"/>
           <h2>Clearly defined. Openly structured.</h2>
           <p className="lead">Every role has a defined scope. No one is locked into anything they didn't agree to.</p>
@@ -219,7 +220,7 @@ export default function App() {
           </div>
         </Section>
 
-        <Section id="operations">
+        <Section id="operations" dark>
           <p className="label">How We Operate</p><div className="divider"/>
           <h2>Simple systems.<br className="br-m"/> Professional execution.</h2>
           <div className="grid">
@@ -230,7 +231,7 @@ export default function App() {
           </div>
         </Section>
 
-        <Section id="roadmap" dark>
+        <Section id="roadmap">
           <p className="label">Roadmap</p><div className="divider"/>
           <h2>Phased growth. No overextension.</h2>
           <p className="lead">Build sequentially — each phase funds the next.</p>
@@ -253,7 +254,7 @@ export default function App() {
           </div>
         </Section>
 
-        <Section id="projections">
+        <Section id="projections" dark>
           <p className="label">Financial Projections</p><div className="divider"/>
           <h2>Conservative targets.<br className="br-m"/> Built on real numbers.</h2>
           <p className="lead">Revenue projections based on published contract values, grant award ranges, and market rates for cleanup services in the Portland metro.</p>
@@ -294,7 +295,7 @@ export default function App() {
           </div>
         </Section>
 
-        <Section id="edge" dark>
+        <Section id="edge">
           <p className="label">Competitive Edge</p><div className="divider"/>
           <h2>Why ClearPath wins.</h2>
           <p className="lead">We're not the only cleanup company — but we're built differently.</p>
@@ -303,6 +304,60 @@ export default function App() {
             <Card icon="📐" title="Dual-Entity Advantage"><p>Our LLC + nonprofit structure lets us compete for contracts AND qualify for grants. Most competitors can only do one. This gives us access to funding streams others can't touch.</p></Card>
             <Card icon="📊" title="Documentation-First"><p>Every job produces GPS-tagged before/after photos, weight logs, and impact reports. Grant agencies and contract managers get exactly the data they need — no extra work.</p></Card>
             <Card icon="⏱️" title="Timing"><p>ODOT's $4M/year cleanup contract expired. 500 workers laid off. The state has a massive backlog and no current vendor. We're positioning now for when funding reopens — and filling the gap with private and grant work in the meantime.</p></Card>
+          </div>
+        </Section>
+
+        <Section id="trust" dark>
+          <p className="label">On the Ground</p><div className="divider"/>
+          <h2>This is what the work looks like.</h2>
+          <p className="lead">Oregon's roadside and public-land cleanup crisis is well-documented. These are real conditions across Clackamas County and the Portland metro — and exactly what ClearPath is built to address.</p>
+          <div className="gallery">
+            <div className="gallery__item">
+              <div className="gallery__img gallery__img--1" role="img" aria-label="Litter-strewn highway shoulder along I-205 in Clackamas County" />
+              <span className="gallery__cap">Highway shoulder litter — I-205 corridor, Clackamas County</span>
+            </div>
+            <div className="gallery__item">
+              <div className="gallery__img gallery__img--2" role="img" aria-label="Illegal dumping site near Oregon City trail system" />
+              <span className="gallery__cap">Illegal dumping near public trail — Oregon City area</span>
+            </div>
+            <div className="gallery__item">
+              <div className="gallery__img gallery__img--3" role="img" aria-label="Volunteer cleanup crew removing debris from park" />
+              <span className="gallery__cap">Community volunteer cleanup — Clackamas County park</span>
+            </div>
+            <div className="gallery__item">
+              <div className="gallery__img gallery__img--4" role="img" aria-label="Restored roadside after professional cleanup" />
+              <span className="gallery__cap">After professional cleanup — the standard we deliver</span>
+            </div>
+          </div>
+          <div className="trust-sources">
+            <h3>Verified Sources & Reporting</h3>
+            <p>Every number in this plan comes from public records. Here are the agencies and programs we reference:</p>
+            <div className="trust-grid">
+              <a href="https://www.oregon.gov/odot/maintenance/" className="trust-link" target="_blank" rel="noopener noreferrer">
+                <span className="trust-link__org">ODOT</span>
+                <span className="trust-link__desc">Highway Maintenance & Litter Programs</span>
+              </a>
+              <a href="https://www.oregonmetro.gov/" className="trust-link" target="_blank" rel="noopener noreferrer">
+                <span className="trust-link__org">Metro</span>
+                <span className="trust-link__desc">Regional Government — Cleanup & Enhancement Grants</span>
+              </a>
+              <a href="https://www.oregon.gov/deq/" className="trust-link" target="_blank" rel="noopener noreferrer">
+                <span className="trust-link__org">Oregon DEQ</span>
+                <span className="trust-link__desc">Dept. of Environmental Quality — Hazards & Cleanup</span>
+              </a>
+              <a href="https://www.solveoregon.org/" className="trust-link" target="_blank" rel="noopener noreferrer">
+                <span className="trust-link__org">SOLVE Oregon</span>
+                <span className="trust-link__desc">Statewide Volunteer Cleanup & Restoration</span>
+              </a>
+              <a href="https://osha.oregon.gov/" className="trust-link" target="_blank" rel="noopener noreferrer">
+                <span className="trust-link__org">Oregon OSHA</span>
+                <span className="trust-link__desc">Workplace Safety Standards & Compliance</span>
+              </a>
+              <a href="https://www.oregon.gov/olcc/pages/bottle_bill.aspx" className="trust-link" target="_blank" rel="noopener noreferrer">
+                <span className="trust-link__org">Oregon Bottle Bill</span>
+                <span className="trust-link__desc">OLCC — Bottle Redemption & Recovery Program</span>
+              </a>
+            </div>
           </div>
         </Section>
 
@@ -334,7 +389,130 @@ export default function App() {
           </div>
         </Section>
 
-        <Section id="invitation" dark>
+        <Section id="files" dark>
+          <p className="label">The Files</p><div className="divider"/>
+          <h2>Every source. Every form.<br className="br-m"/> All in one place.</h2>
+          <p className="lead">This project is built on publicly available legal frameworks, state programs, and government funding mechanisms. Below is the full reference library — organized by category.</p>
+
+          <div className="files">
+            <div className="files__group">
+              <h3>Business Formation & Registration</h3>
+              <div className="files__list">
+                <a href="https://sos.oregon.gov/business/pages/register.aspx" className="file-link" target="_blank" rel="noopener noreferrer">
+                  <span className="file-link__icon">📄</span>
+                  <div>
+                    <span className="file-link__title">Oregon LLC Registration</span>
+                    <span className="file-link__sub">Secretary of State — Business Registry</span>
+                  </div>
+                </a>
+                <a href="https://www.doj.state.or.us/charitable-activities/" className="file-link" target="_blank" rel="noopener noreferrer">
+                  <span className="file-link__icon">📄</span>
+                  <div>
+                    <span className="file-link__title">Oregon Nonprofit / 501(c)(3) Formation</span>
+                    <span className="file-link__sub">Dept. of Justice — Charitable Activities Section</span>
+                  </div>
+                </a>
+                <a href="https://oregonbuys.gov/" className="file-link" target="_blank" rel="noopener noreferrer">
+                  <span className="file-link__icon">📄</span>
+                  <div>
+                    <span className="file-link__title">OregonBuys — State Procurement Portal</span>
+                    <span className="file-link__sub">Vendor registration for government contract bidding</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div className="files__group">
+              <h3>Government Contracts & Grants</h3>
+              <div className="files__list">
+                <a href="https://www.oregon.gov/odot/maintenance/" className="file-link" target="_blank" rel="noopener noreferrer">
+                  <span className="file-link__icon">📋</span>
+                  <div>
+                    <span className="file-link__title">ODOT Highway Maintenance & Cleanup</span>
+                    <span className="file-link__sub">Oregon Dept. of Transportation — maintenance division, litter programs, Adopt a Highway</span>
+                  </div>
+                </a>
+                <a href="https://www.oregonmetro.gov/" className="file-link" target="_blank" rel="noopener noreferrer">
+                  <span className="file-link__icon">📋</span>
+                  <div>
+                    <span className="file-link__title">Metro Regional Government</span>
+                    <span className="file-link__sub">Community enhancement grants, regional cleanup funding, Nature in Neighborhoods</span>
+                  </div>
+                </a>
+                <a href="https://www.orcity.org/" className="file-link" target="_blank" rel="noopener noreferrer">
+                  <span className="file-link__icon">📋</span>
+                  <div>
+                    <span className="file-link__title">Oregon City — Community Enhancement Grant</span>
+                    <span className="file-link__sub">Metro-funded, up to $400K/year for neighborhood safety & cleanliness projects</span>
+                  </div>
+                </a>
+                <a href="https://www.clackamas.us/roads/" className="file-link" target="_blank" rel="noopener noreferrer">
+                  <span className="file-link__icon">📋</span>
+                  <div>
+                    <span className="file-link__title">Clackamas County Roads & Adopt-a-Road</span>
+                    <span className="file-link__sub">County-level roadside maintenance programs and volunteer coordination</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div className="files__group">
+              <h3>Safety, Compliance & Environmental</h3>
+              <div className="files__list">
+                <a href="https://osha.oregon.gov/" className="file-link" target="_blank" rel="noopener noreferrer">
+                  <span className="file-link__icon">🛡️</span>
+                  <div>
+                    <span className="file-link__title">Oregon OSHA</span>
+                    <span className="file-link__sub">State workplace safety standards — PPE, hazmat, roadside work protocols</span>
+                  </div>
+                </a>
+                <a href="https://www.oregon.gov/deq/" className="file-link" target="_blank" rel="noopener noreferrer">
+                  <span className="file-link__icon">🛡️</span>
+                  <div>
+                    <span className="file-link__title">Oregon DEQ</span>
+                    <span className="file-link__sub">Dept. of Environmental Quality — hazards, cleanup standards, environmental permits</span>
+                  </div>
+                </a>
+                <a href="https://www.oregon.gov/odot/maintenance/pages/adopt.aspx" className="file-link" target="_blank" rel="noopener noreferrer">
+                  <span className="file-link__icon">🛡️</span>
+                  <div>
+                    <span className="file-link__title">ODOT Adopt a Highway Safety Requirements</span>
+                    <span className="file-link__sub">Volunteer and contractor safety protocols for highway work zones</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div className="files__group">
+              <h3>Partners & Material Recovery</h3>
+              <div className="files__list">
+                <a href="https://www.solveoregon.org/" className="file-link" target="_blank" rel="noopener noreferrer">
+                  <span className="file-link__icon">🤝</span>
+                  <div>
+                    <span className="file-link__title">SOLVE Oregon</span>
+                    <span className="file-link__sub">Statewide cleanup events, volunteer coordination, environmental restoration</span>
+                  </div>
+                </a>
+                <a href="https://www.bottledropcenters.com/" className="file-link" target="_blank" rel="noopener noreferrer">
+                  <span className="file-link__icon">♻️</span>
+                  <div>
+                    <span className="file-link__title">BottleDrop / Oregon Bottle Bill</span>
+                    <span className="file-link__sub">Beverage container redemption — revenue stream for high-volume collection</span>
+                  </div>
+                </a>
+                <a href="https://www.oregon.gov/olcc/pages/bottle_bill.aspx" className="file-link" target="_blank" rel="noopener noreferrer">
+                  <span className="file-link__icon">♻️</span>
+                  <div>
+                    <span className="file-link__title">OLCC Bottle Bill — Official Program</span>
+                    <span className="file-link__sub">Oregon Liquor & Cannabis Commission — bottle bill administration & rates</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </Section>
+
+        <Section id="invitation">
           <p className="label">Open Invitation</p><div className="divider"/>
           <h2>This is a conversation, not a pitch.</h2>
           <div className="invite">
@@ -342,13 +520,12 @@ export default function App() {
             <p>This plan is a starting point. If you see angles we've missed, structures that work better, or a different way to be involved — that's what we want to hear.</p>
             <p className="invite__cta">Advisory, board, co-founder, or one-time consult on legal structure — every option is on the table. We define this together.</p>
             <div className="invite__contact">
-              <a href="mailto:keith@clearpathenv.com" className="invite__btn">keith@clearpathenv.com</a>
-              <a href="tel:+15035551234" className="invite__btn invite__btn--s">503-555-1234</a>
+              <a href="mailto:skdevv@att.net" className="invite__btn">skdevv@att.net</a>
             </div>
           </div>
         </Section>
 
-        <Section id="costs">
+        <Section id="costs" dark>
           <p className="label">Startup Requirements</p><div className="divider"/>
           <h2>Low barrier. Real returns.</h2>
           <p className="lead">Not capital-intensive. Costs scale with revenue.</p>
@@ -507,6 +684,37 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .bbox__list li::before{content:'—';position:absolute;left:0;color:var(--pine);font-weight:700}
 .bbox--w .bbox__list li::before{color:var(--earth)}
 
+/* GALLERY */
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin:1.5rem 0}
+.gallery__item{position:relative;border-radius:var(--r);overflow:hidden}
+.gallery__img{width:100%;aspect-ratio:4/3;background-size:cover;background-position:center;filter:brightness(.85)}
+.gallery__img--1{background:linear-gradient(135deg,#3a5a3a 0%,#5a7a5a 50%,#4a6a4a 100%);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%233a5a3a' width='400' height='300'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='%23ffffff30' font-family='sans-serif' font-size='14'%3EHighway Shoulder — I-205%3C/text%3E%3Ctext x='200' y='165' text-anchor='middle' fill='%23ffffff20' font-family='sans-serif' font-size='11'%3EPhoto placeholder%3C/text%3E%3C/svg%3E")}
+.gallery__img--2{background:linear-gradient(135deg,#4a5a3a 0%,#6a7a4a 50%,#5a6a3a 100%);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%234a5a3a' width='400' height='300'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='%23ffffff30' font-family='sans-serif' font-size='14'%3EIllegal Dumping Site%3C/text%3E%3Ctext x='200' y='165' text-anchor='middle' fill='%23ffffff20' font-family='sans-serif' font-size='11'%3EPhoto placeholder%3C/text%3E%3C/svg%3E")}
+.gallery__img--3{background:linear-gradient(135deg,#2d5a3f 0%,#4a7a5a 50%,#3a6a4a 100%);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%232d5a3f' width='400' height='300'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='%23ffffff30' font-family='sans-serif' font-size='14'%3EVolunteer Cleanup Crew%3C/text%3E%3Ctext x='200' y='165' text-anchor='middle' fill='%23ffffff20' font-family='sans-serif' font-size='11'%3EPhoto placeholder%3C/text%3E%3C/svg%3E")}
+.gallery__img--4{background:linear-gradient(135deg,#1a4a2a 0%,#3a6a4a 50%,#2a5a3a 100%);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%231a4a2a' width='400' height='300'/%3E%3Ctext x='200' y='140' text-anchor='middle' fill='%23ffffff30' font-family='sans-serif' font-size='14'%3EAfter Cleanup — Restored%3C/text%3E%3Ctext x='200' y='165' text-anchor='middle' fill='%23ffffff20' font-family='sans-serif' font-size='11'%3EPhoto placeholder%3C/text%3E%3C/svg%3E")}
+.gallery__cap{display:block;padding:.5rem .1rem;font-size:.72rem;color:var(--text-lt);text-align:center}
+
+/* TRUST SOURCES */
+.trust-sources{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08)}
+.trust-sources h3{font-size:1.05rem;margin-bottom:.3rem}
+.trust-sources>p{font-size:.88rem;margin-bottom:1rem}
+.trust-grid{display:grid;grid-template-columns:1fr;gap:.6rem}
+.trust-link{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;text-decoration:none;transition:transform .2s,background .2s}
+.trust-link:hover{transform:translateY(-2px);background:rgba(255,255,255,.08)}
+.trust-link__org{font-family:var(--serif);font-size:.9rem;color:var(--clay);white-space:nowrap;min-width:90px}
+.trust-link__desc{font-size:.78rem;color:rgba(245,240,232,.5);line-height:1.35}
+.gallery__cap{color:rgba(245,240,232,.5)}
+
+/* THE FILES */
+.files{margin-top:1.5rem;display:flex;flex-direction:column;gap:2rem}
+.files__group h3{color:var(--clay);font-size:1rem;margin-bottom:.75rem;padding-bottom:.4rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.files__list{display:flex;flex-direction:column;gap:.5rem}
+.file-link{display:flex;align-items:flex-start;gap:.75rem;padding:.75rem 1rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;text-decoration:none;transition:background .2s,transform .15s}
+.file-link:hover{background:rgba(255,255,255,.08);transform:translateX(4px)}
+.file-link__icon{font-size:1.1rem;flex-shrink:0;margin-top:.1rem}
+.file-link__title{display:block;font-weight:600;font-size:.88rem;color:var(--sand);line-height:1.3}
+.file-link__sub{display:block;font-size:.75rem;color:rgba(245,240,232,.45);line-height:1.4;margin-top:.15rem}
+
 /* INVITE */
 .invite{background:rgba(255,255,255,.03);border:2px dashed rgba(255,255,255,.12);border-radius:12px;padding:1.5rem;margin-top:1.5rem;text-align:center}
 .invite h3{font-size:1.2rem;margin-bottom:.5rem}
@@ -568,6 +776,8 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .invite__contact{flex-direction:row;gap:.8rem}
 .hero{padding:6rem 2rem 5rem}
 .proj-notes{grid-template-columns:1fr 1fr}
+.trust-grid{grid-template-columns:repeat(2,1fr)}
+.files__list{display:grid;grid-template-columns:1fr}
 }
 
 /* DESKTOP 900px+ */
@@ -585,5 +795,8 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .br-m{display:none}
 .hero__scroll{bottom:120px}
 .totop{bottom:2rem;right:2rem}
+.trust-grid{grid-template-columns:repeat(3,1fr)}
+.files__list{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.nav__links a{font-size:.65rem;letter-spacing:.03em}
 }
 `
