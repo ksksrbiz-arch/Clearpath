@@ -99,8 +99,9 @@ export default function App() {
   }, [closeDrawer])
 
   const NAV = [
-    ['#mission','Mission'],['#opportunity','Opportunity'],['#model','Model'],
-    ['#team','Team'],['#roadmap','Roadmap'],['#boundaries','Boundaries'],['#costs','Costs'],
+    ['#mission','Mission'],['#opportunity','Opportunity'],['#model','Model'],['#structure','Structure'],
+    ['#team','Team'],['#operations','Operations'],['#roadmap','Roadmap'],['#projections','Projections'],
+    ['#edge','Why Us'],['#boundaries','Boundaries'],['#costs','Costs'],['#invitation','Join'],
   ]
 
   return (
@@ -166,6 +167,37 @@ export default function App() {
           </div>
         </Section>
 
+        <Section id="structure" dark>
+          <p className="label">Legal Structure</p><div className="divider"/>
+          <h2>Two entities. One mission.</h2>
+          <p className="lead">A hybrid model gives us the flexibility to win contracts and the eligibility to receive grants — without compromising either.</p>
+          <div className="grid grid--2">
+            <div className="card">
+              <div className="card__ic">🏢</div>
+              <h3>ClearPath Environmental LLC</h3>
+              <p>The commercial arm. Bids on government RFPs via OregonBuys, signs private contracts with HOAs and property managers, handles payroll and operations.</p>
+              <ul className="struct-list">
+                <li>Registered in Oregon (Secretary of State)</li>
+                <li>General liability + commercial auto insurance</li>
+                <li>OregonBuys & Bid Locker vendor registration</li>
+                <li>Revenue from contracts and material recovery</li>
+              </ul>
+            </div>
+            <div className="card">
+              <div className="card__ic">🌱</div>
+              <h3>ClearPath Community (501c3)</h3>
+              <p>The nonprofit arm. Applies for grants, coordinates volunteers, runs community cleanup events, and tracks environmental impact metrics.</p>
+              <ul className="struct-list">
+                <li>501(c)(3) tax-exempt status (formation priority)</li>
+                <li>Eligible for Oregon City Enhancement Grants</li>
+                <li>SOLVE Oregon & Adopt-a-Road partnerships</li>
+                <li>Board of directors with community oversight</li>
+              </ul>
+            </div>
+          </div>
+          <p className="struct-note">Both entities share the same mission, team, and operational standards. The LLC contracts work; the nonprofit funds community programs and volunteer coordination. Revenue flows are kept separate with full transparency.</p>
+        </Section>
+
         <Section id="team" dark>
           <p className="label">Team & Roles</p><div className="divider"/>
           <h2>Clearly defined. Openly structured.</h2>
@@ -221,6 +253,59 @@ export default function App() {
           </div>
         </Section>
 
+        <Section id="projections">
+          <p className="label">Financial Projections</p><div className="divider"/>
+          <h2>Conservative targets.<br className="br-m"/> Built on real numbers.</h2>
+          <p className="lead">Revenue projections based on published contract values, grant award ranges, and market rates for cleanup services in the Portland metro.</p>
+          <div className="proj">
+            <div className="proj__row proj__head">
+              <span></span><span>Year 1</span><span>Year 2</span><span>Year 3</span>
+            </div>
+            <div className="proj__row">
+              <span>Government Contracts</span><span>$15K</span><span>$60K</span><span>$150K</span>
+            </div>
+            <div className="proj__row">
+              <span>Grants & Community Funds</span><span>$25K</span><span>$50K</span><span>$80K</span>
+            </div>
+            <div className="proj__row">
+              <span>Private Contracts</span><span>$10K</span><span>$35K</span><span>$70K</span>
+            </div>
+            <div className="proj__row">
+              <span>Material Recovery</span><span>$2K</span><span>$5K</span><span>$10K</span>
+            </div>
+            <div className="proj__row proj__total">
+              <span>Total Revenue</span><span>$52K</span><span>$150K</span><span>$310K</span>
+            </div>
+          </div>
+          <div className="proj-notes">
+            <div className="proj-note">
+              <h3>Key Assumptions</h3>
+              <ul className="bbox__list">
+                <li>Oregon City Enhancement Grant: $25K–$50K award in Year 1</li>
+                <li>First government RFP win by Q4 Year 1 (small ODOT/County scope)</li>
+                <li>3–5 recurring private contracts by end of Year 1</li>
+                <li>Full-time crew of 2–3 by Year 2, scaling to 4–6 by Year 3</li>
+              </ul>
+            </div>
+            <div className="proj-note">
+              <h3>Break-Even</h3>
+              <p>Monthly operating costs estimated at $3,500–$4,500 (insurance, fuel, equipment, crew). Break-even at ~$4K/month revenue — achievable within 6 months of first contract.</p>
+            </div>
+          </div>
+        </Section>
+
+        <Section id="edge" dark>
+          <p className="label">Competitive Edge</p><div className="divider"/>
+          <h2>Why ClearPath wins.</h2>
+          <p className="lead">We're not the only cleanup company — but we're built differently.</p>
+          <div className="grid">
+            <Card icon="📍" title="Local Roots, Local Knowledge"><p>Based in Oregon City, not a satellite office. We know these roads, trails, and neighborhoods because we live here. Faster response, better site assessments, real relationships with local government.</p></Card>
+            <Card icon="📐" title="Dual-Entity Advantage"><p>Our LLC + nonprofit structure lets us compete for contracts AND qualify for grants. Most competitors can only do one. This gives us access to funding streams others can't touch.</p></Card>
+            <Card icon="📊" title="Documentation-First"><p>Every job produces GPS-tagged before/after photos, weight logs, and impact reports. Grant agencies and contract managers get exactly the data they need — no extra work.</p></Card>
+            <Card icon="⏱️" title="Timing"><p>ODOT's $4M/year cleanup contract expired. 500 workers laid off. The state has a massive backlog and no current vendor. We're positioning now for when funding reopens — and filling the gap with private and grant work in the meantime.</p></Card>
+          </div>
+        </Section>
+
         <Section id="boundaries">
           <p className="label">Clear Boundaries</p><div className="divider"/>
           <h2>What we commit to — and what we don't.</h2>
@@ -256,6 +341,10 @@ export default function App() {
             <h3>Your ideas belong here.</h3>
             <p>This plan is a starting point. If you see angles we've missed, structures that work better, or a different way to be involved — that's what we want to hear.</p>
             <p className="invite__cta">Advisory, board, co-founder, or one-time consult on legal structure — every option is on the table. We define this together.</p>
+            <div className="invite__contact">
+              <a href="mailto:keith@clearpathenv.com" className="invite__btn">keith@clearpathenv.com</a>
+              <a href="tel:+15035551234" className="invite__btn invite__btn--s">503-555-1234</a>
+            </div>
           </div>
         </Section>
 
@@ -287,6 +376,9 @@ export default function App() {
       <footer className="foot">
         <div className="foot__brand">{VENTURE_NAME}</div>
         <p>{REGION}</p>
+        <nav className="foot__nav">
+          {NAV.map(([h,l])=>(<a key={h} href={h}>{l}</a>))}
+        </nav>
         <p className="foot__copy">Draft Business Plan — {new Date().getFullYear()} · Prepared by Keith Skaggs Jr.</p>
       </footer>
 
@@ -306,8 +398,8 @@ body{font-family:var(--sans);font-size:16px;color:var(--text);background:var(--c
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:.8rem var(--pad);transition:background .35s,padding .35s,box-shadow .35s;background:transparent}
 .nav--s{background:rgba(26,58,42,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:.6rem var(--pad);box-shadow:0 2px 20px rgba(0,0,0,.12)}
 .nav__brand{font-family:var(--serif);font-size:1.05rem;color:var(--white);text-decoration:none;white-space:nowrap}
-.nav__links{display:none;list-style:none;gap:1.3rem}
-.nav__links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;transition:color .2s;padding:.3rem 0}
+.nav__links{display:none;list-style:none;gap:.9rem}
+.nav__links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.7rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;transition:color .2s;padding:.3rem 0}
 .nav__links a:hover{color:var(--white)}
 .nav__burger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;background:none;border:none;cursor:pointer;padding:10px;-webkit-tap-highlight-color:transparent}
 .nav__burger span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px;transition:transform .25s,opacity .25s}
@@ -421,9 +513,40 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .invite p{max-width:540px;margin:0 auto .5rem;font-size:.92rem}
 .invite__cta{font-weight:600!important;color:var(--clay)!important}
 
+/* STRUCTURE LIST */
+.struct-list{list-style:none;margin:.6rem 0 0;display:flex;flex-direction:column;gap:.35rem}
+.struct-list li{font-size:.85rem;padding-left:1.2rem;position:relative;line-height:1.5}
+.struct-list li::before{content:'✓';position:absolute;left:0;color:var(--sage);font-weight:700;font-size:.75rem}
+.s--d .struct-list li::before{color:var(--clay)}
+.struct-note{margin-top:1.5rem;padding:1rem 1.25rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);font-size:.88rem;font-style:italic;color:rgba(245,240,232,.6)}
+
+/* PROJECTIONS */
+.proj{margin:1.5rem 0;border:1px solid var(--stone);border-radius:var(--r);overflow:hidden}
+.proj__row{display:grid;grid-template-columns:1.6fr repeat(3,1fr);padding:.65rem 1rem;font-size:.85rem;border-bottom:1px solid var(--stone)}
+.proj__row:last-child{border-bottom:none}
+.proj__head{background:var(--forest);color:var(--sand);font-weight:700;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase}
+.proj__head span:not(:first-child){text-align:center}
+.proj__row span:not(:first-child){text-align:center;font-weight:600;color:var(--earth)}
+.proj__total{background:var(--sand);font-weight:700}
+.proj__total span{color:var(--forest)!important;font-size:.95rem}
+.proj-notes{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1.5rem}
+.proj-note{background:var(--white);border:1px solid var(--stone);border-radius:var(--r);padding:1.25rem}
+.proj-note h3{font-size:1rem;margin-bottom:.6rem}
+.proj-note p{font-size:.88rem;margin-bottom:0}
+
+/* INVITE CONTACT */
+.invite__contact{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin-top:1.25rem}
+.invite__btn{display:inline-block;padding:.6rem 1.5rem;background:var(--clay);color:var(--white);text-decoration:none;border-radius:6px;font-weight:600;font-size:.9rem;letter-spacing:.02em;transition:background .2s,transform .15s}
+.invite__btn:hover{background:var(--earth);transform:translateY(-1px)}
+.invite__btn--s{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.82rem;padding:.45rem 1.2rem}
+.invite__btn--s:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.35);color:var(--white);transform:translateY(-1px)}
+
 /* FOOTER */
 .foot{background:var(--charcoal);color:rgba(255,255,255,.45);padding:2.5rem var(--pad);text-align:center;font-size:.8rem}
 .foot__brand{font-family:var(--serif);font-size:1rem;color:var(--white);margin-bottom:.35rem}
+.foot__nav{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem .9rem;margin:1rem 0}
+.foot__nav a{color:rgba(255,255,255,.4);text-decoration:none;font-size:.72rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;transition:color .2s}
+.foot__nav a:hover{color:var(--white)}
 .foot__copy{margin-top:.4rem;opacity:.6}.foot p{margin-bottom:0}
 
 /* SCROLL TO TOP */
@@ -442,7 +565,9 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .stats{grid-template-columns:repeat(4,1fr)}
 .bbox__list{display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1.5rem}
 .invite{padding:2rem}
+.invite__contact{flex-direction:row;gap:.8rem}
 .hero{padding:6rem 2rem 5rem}
+.proj-notes{grid-template-columns:1fr 1fr}
 }
 
 /* DESKTOP 900px+ */
