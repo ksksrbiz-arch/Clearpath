@@ -84,8 +84,10 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [showTop, setShowTop] = useState(false)
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('theme') === 'dark')
   const toggleDrawer = useCallback(() => setDrawerOpen(p => !p), [])
   const closeDrawer = useCallback(() => setDrawerOpen(false), [])
+  const toggleTheme = useCallback(() => setDarkMode(p => !p), [])
 
   useEffect(() => {
     const fn = () => { setScrolled(window.scrollY > 60); setShowTop(window.scrollY > 800) }
@@ -97,6 +99,10 @@ export default function App() {
     window.addEventListener('keydown', fn)
     return () => window.removeEventListener('keydown', fn)
   }, [closeDrawer])
+  useEffect(() => {
+    document.documentElement.classList.toggle('theme--dark', darkMode)
+    localStorage.setItem('theme', darkMode ? 'dark' : 'light')
+  }, [darkMode])
 
   const NAV = [
     ['#mission','Mission'],['#opportunity','Opportunity'],['#model','Model'],['#structure','Structure'],
@@ -112,6 +118,9 @@ export default function App() {
       <header className={`nav ${scrolled ? 'nav--s' : ''}`}>
         <a href="#" className="nav__brand">{VENTURE_NAME}</a>
         <ul className="nav__links">{NAV.map(([h,l])=>(<li key={h}><a href={h}>{l}</a></li>))}</ul>
+        <button className="nav__theme" onClick={toggleTheme} aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}>
+          {darkMode ? '\u2600' : '\u263E'}
+        </button>
         <button className="nav__burger" onClick={toggleDrawer} aria-label="Open menu" aria-expanded={drawerOpen}>
           <span /><span /><span />
         </button>
@@ -799,4 +808,41 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .files__list{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
 .nav__links a{font-size:.65rem;letter-spacing:.03em}
 }
+
+/* THEME TOGGLE */
+.nav__theme{background:none;border:1px solid rgba(255,255,255,.2);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.7);font-size:1rem;transition:border-color .2s,color .2s;margin-left:.5rem;flex-shrink:0}
+.nav__theme:hover{border-color:rgba(255,255,255,.4);color:var(--white)}
+
+/* DARK MODE */
+.theme--dark body{background:var(--charcoal);color:var(--sand)}
+.theme--dark .s:not(.s--d){background:var(--charcoal);color:var(--sand)}
+.theme--dark .s:not(.s--d) h2{color:var(--white)}
+.theme--dark .s:not(.s--d) h3{color:var(--sand)}
+.theme--dark .s:not(.s--d) .label{color:var(--clay)}
+.theme--dark .s:not(.s--d) .lead{color:rgba(245,240,232,.65)}
+.theme--dark .s:not(.s--d) p{color:rgba(245,240,232,.8)}
+.theme--dark .s:not(.s--d) .divider{background:var(--clay)}
+.theme--dark .s:not(.s--d) .card{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .card:hover{box-shadow:0 8px 28px rgba(0,0,0,.2)}
+.theme--dark .s:not(.s--d) .card__ic{background:rgba(196,149,106,.12)}
+.theme--dark .s:not(.s--d) .card h3{color:var(--sand)}
+.theme--dark .s:not(.s--d) .rc{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .rc__t{color:var(--sand)}
+.theme--dark .s:not(.s--d) .rc__n{color:var(--clay)}
+.theme--dark .s:not(.s--d) .rc__tag{background:rgba(122,158,126,.12);color:var(--sage)}
+.theme--dark .s:not(.s--d) .bbox{background:rgba(45,90,63,.15);border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .bbox--w{background:rgba(196,149,106,.1);border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .bbox h3{color:var(--sage)}
+.theme--dark .s:not(.s--d) .bbox--w h3{color:var(--clay)}
+.theme--dark .s:not(.s--d) .bbox__list li::before{color:var(--sage)}
+.theme--dark .s:not(.s--d) .bbox--w .bbox__list li::before{color:var(--clay)}
+.theme--dark .s:not(.s--d) .proj{border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .proj__row{border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .proj__total{background:rgba(255,255,255,.06)}
+.theme--dark .s:not(.s--d) .proj-note{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .proj-note h3{color:var(--sand)}
+.theme--dark .s:not(.s--d) .cr{border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .invite{border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.03)}
+.theme--dark .s:not(.s--d) .gallery__cap{color:rgba(245,240,232,.5)}
+.theme--dark .hero::after{background:linear-gradient(to top,var(--charcoal),transparent)}
 `
