@@ -118,7 +118,7 @@ export default function App() {
     ['#mission','Mission'],['#opportunity','Opportunity'],['#model','Model'],['#structure','Structure'],
     ['#team','Team'],['#operations','Operations'],['#roadmap','Roadmap'],['#projections','Projections'],
     ['#edge','Why Us'],['#trust','Proof'],['#boundaries','Boundaries'],['#costs','Costs'],
-    ['#files','The Files'],['#invitation','Join'],
+    ['#files','The Files'],['#invitation','Join'],['#workforce','Workforce'],
   ]
 
   return (
@@ -541,7 +541,58 @@ export default function App() {
           </div>
         </Section>
 
-        <Section id="costs" dark>
+        <Section id="workforce" dark>
+          <p className="label">Community Workforce Program</p><div className="divider"/>
+          <h2>Paid work. Real impact.<br className="br-m"/> Open to everyone.</h2>
+          <p className="lead">ClearPath partners with local shelters, transitional housing programs, and workforce agencies to offer paid cleanup shifts to people experiencing homelessness or economic hardship. No experience required. No judgment. Just honest work and fair pay.</p>
+
+          <div className="grid grid--2">
+            <div className="card">
+              <div className="card__ic">💼</div>
+              <h3>How It Works</h3>
+              <ul className="wf-list">
+                <li>Sign up at any partner location or walk-in</li>
+                <li>30-minute safety orientation and PPE fitting</li>
+                <li>Assigned to a supervised crew (4–6 hour shifts)</li>
+                <li>Paid $15–$18/hr, same-day or weekly</li>
+                <li>Consistent performers offered recurring shifts</li>
+              </ul>
+            </div>
+            <div className="card">
+              <div className="card__ic">🤝</div>
+              <h3>Partner Organizations</h3>
+              <ul className="wf-list">
+                <li>Central City Concern — housing & recovery services</li>
+                <li>Clackamas County Social Services</li>
+                <li>WorkSource Oregon — workforce development</li>
+                <li>JOIN — homeless outreach & services</li>
+                <li>Clackamas Women's Services</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid">
+            <Card icon="🌟" title="Benefits for Participants">
+              <p>Immediate income with no barriers to entry. Outdoor, meaningful work. Pathway to full-time crew positions for consistent performers. Reference letters and job skills documentation for future employment.</p>
+            </Card>
+            <Card icon="📈" title="Benefits for ClearPath">
+              <p>Scalable, flexible labor force. Stronger grant eligibility through workforce development and equity programs. Deeper community integration. Aligns nonprofit mission with direct social impact.</p>
+            </Card>
+            <Card icon="💰" title="Funding Sources">
+              <p>Oregon Workforce Innovation and Opportunity Act (WIOA) funds. Metro equity-focused community grants. Private foundation grants for workforce development. Social enterprise revenue models.</p>
+            </Card>
+            <Card icon="🛡️" title="Safety & Support">
+              <p>Full PPE provided for every participant. Water, snacks, and sunscreen on-site. Transportation to work sites when possible. On-site crew lead supervision. Zero-tolerance for harassment — safe environment guaranteed.</p>
+            </Card>
+          </div>
+
+          <div className="wf-cta">
+            <h3>Everyone deserves a shot.</h3>
+            <p>This isn't charity — it's a workforce model that works. Participants earn real wages doing real work. ClearPath gets the crew capacity to scale. The community gets cleaner public spaces. Everyone wins.</p>
+          </div>
+        </Section>
+
+        <Section id="costs">
           <p className="label">Startup Requirements</p><div className="divider"/>
           <h2>Low barrier. Real returns.</h2>
           <p className="lead">Not capital-intensive. Costs scale with revenue.</p>
@@ -774,6 +825,14 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .foot__nav a{color:rgba(255,255,255,.4);text-decoration:none;font-size:.72rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;transition:color .2s}
 .foot__nav a:hover{color:var(--white)}
 .foot__copy{margin-top:.4rem;opacity:.6}.foot p{margin-bottom:0}
+
+/* WORKFORCE */
+.wf-list{list-style:none;display:flex;flex-direction:column;gap:.4rem;margin-top:.5rem}
+.wf-list li{font-size:.88rem;padding-left:1.4rem;position:relative;line-height:1.5}
+.wf-list li::before{content:'→';position:absolute;left:0;color:var(--clay);font-weight:700}
+.wf-cta{margin-top:2rem;padding:1.5rem;background:rgba(196,149,106,.08);border:2px solid rgba(196,149,106,.2);border-radius:12px;text-align:center}
+.wf-cta h3{color:var(--clay);font-size:1.15rem;margin-bottom:.5rem}
+.wf-cta p{max-width:580px;margin:0 auto;font-size:.92rem}
 
 /* SCROLL TO TOP */
 .totop{position:fixed;bottom:1.25rem;right:1.25rem;z-index:90;width:44px;height:44px;border-radius:50%;background:var(--forest);color:var(--white);border:1px solid rgba(255,255,255,.15);font-size:1.1rem;cursor:pointer;opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s,background .2s;pointer-events:none;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;box-shadow:0 4px 14px rgba(0,0,0,.2)}
