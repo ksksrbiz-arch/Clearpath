@@ -296,7 +296,6 @@ export default function App() {
 }
 
 const styles = `
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
 :root{--forest:#1a3a2a;--pine:#2d5a3f;--sage:#7a9e7e;--earth:#8b6f47;--clay:#c4956a;--sand:#f5f0e8;--cream:#faf8f4;--stone:#e8e2d8;--charcoal:#2a2a28;--text:#3a3a38;--text-lt:#6a6a66;--white:#fff;--serif:'DM Serif Display',Georgia,serif;--sans:'Source Sans 3',-apple-system,sans-serif;--max-w:960px;--pad:1.25rem;--r:10px}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
