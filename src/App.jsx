@@ -520,7 +520,8 @@ export default function App() {
             <p>This plan is a starting point. If you see angles we've missed, structures that work better, or a different way to be involved — that's what we want to hear.</p>
             <p className="invite__cta">Advisory, board, co-founder, or one-time consult on legal structure — every option is on the table. We define this together.</p>
             <div className="invite__contact">
-              <a href="mailto:skdevv@att.net" className="invite__btn">skdevv@att.net</a>
+              <button className="invite__btn no-print" onClick={() => window.print()}>Download Business Plan</button>
+              <a href="mailto:skdevv@att.net" className="invite__btn invite__btn--s">skdevv@att.net</a>
             </div>
           </div>
         </Section>
@@ -744,7 +745,7 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 
 /* INVITE CONTACT */
 .invite__contact{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin-top:1.25rem}
-.invite__btn{display:inline-block;padding:.6rem 1.5rem;background:var(--clay);color:var(--white);text-decoration:none;border-radius:6px;font-weight:600;font-size:.9rem;letter-spacing:.02em;transition:background .2s,transform .15s}
+.invite__btn{display:inline-block;padding:.6rem 1.5rem;background:var(--clay);color:var(--white);text-decoration:none;border:none;border-radius:6px;font-weight:600;font-size:.9rem;letter-spacing:.02em;cursor:pointer;transition:background .2s,transform .15s}
 .invite__btn:hover{background:var(--earth);transform:translateY(-1px)}
 .invite__btn--s{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.82rem;padding:.45rem 1.2rem}
 .invite__btn--s:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.35);color:var(--white);transform:translateY(-1px)}
@@ -799,4 +800,7 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .files__list{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
 .nav__links a{font-size:.65rem;letter-spacing:.03em}
 }
+
+/* PRINT */
+@media print{.no-print{display:none!important}}
 `
