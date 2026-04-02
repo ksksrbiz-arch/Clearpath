@@ -25,18 +25,13 @@ function useInView(threshold = 0.1) {
 /* ─── Count-up animation hook ─── */
 function useCountUp(endValue, duration = 2000, threshold = 0.1) {
   const ref = useRef(null)
-  const [display, setDisplay] = useState(0)
+  const prefersReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const [display, setDisplay] = useState(prefersReduced ? endValue : 0)
   const started = useRef(false)
 
   useEffect(() => {
     const el = ref.current
-    if (!el) return
-
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) {
-      setDisplay(endValue)
-      return
-    }
+    if (!el || prefersReduced) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -58,7 +53,7 @@ function useCountUp(endValue, duration = 2000, threshold = 0.1) {
     )
     observer.observe(el)
     return () => observer.disconnect()
-  }, [endValue, duration, threshold])
+  }, [endValue, duration, threshold, prefersReduced])
 
   return [ref, display]
 }
@@ -137,8 +132,18 @@ export default function App() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [showTop, setShowTop] = useState(false)
   const [activeSection, setActiveSection] = useState('')
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('theme') === 'dark')
+  const [formSubmitted, setFormSubmitted] = useState(false)
   const toggleDrawer = useCallback(() => setDrawerOpen(p => !p), [])
   const closeDrawer = useCallback(() => setDrawerOpen(false), [])
+  const toggleTheme = useCallback(() => setDarkMode(p => !p), [])
+  const handleContactSubmit = useCallback((e) => {
+    e.preventDefault()
+    const form = e.target
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
+      .then(() => setFormSubmitted(true))
+      .catch(() => setFormSubmitted(true))
+  }, [])
 
   useEffect(() => {
     const fn = () => { setScrolled(window.scrollY > 60); setShowTop(window.scrollY > 800) }
@@ -165,6 +170,10 @@ export default function App() {
     window.addEventListener('keydown', fn)
     return () => window.removeEventListener('keydown', fn)
   }, [closeDrawer])
+  useEffect(() => {
+    document.documentElement.classList.toggle('theme--dark', darkMode)
+    localStorage.setItem('theme', darkMode ? 'dark' : 'light')
+  }, [darkMode])
 
   const NAV = [
     ['#mission','Mission'],['#opportunity','Opportunity'],['#model','Model'],['#structure','Structure'],
@@ -180,6 +189,9 @@ export default function App() {
       <header className={`nav ${scrolled ? 'nav--s' : ''}`}>
         <a href="#" className="nav__brand">{VENTURE_NAME}</a>
         <ul className="nav__links">{NAV.map(([h,l])=>(<li key={h}><a href={h} className={activeSection === h.slice(1) ? 'nav__link--active' : ''}>{l}</a></li>))}</ul>
+        <button className="nav__theme" onClick={toggleTheme} aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}>
+          {darkMode ? '\u2600' : '\u263E'}
+        </button>
         <button className="nav__burger" onClick={toggleDrawer} aria-label="Open menu" aria-expanded={drawerOpen}>
           <span /><span /><span />
         </button>
@@ -587,9 +599,44 @@ export default function App() {
             <h3>Your ideas belong here.</h3>
             <p>This plan is a starting point. If you see angles we've missed, structures that work better, or a different way to be involved — that's what we want to hear.</p>
             <p className="invite__cta">Advisory, board, co-founder, or one-time consult on legal structure — every option is on the table. We define this together.</p>
-            <div className="invite__contact">
-              <a href="mailto:skdevv@att.net" className="invite__btn">skdevv@att.net</a>
+            <div className="invite__actions">
+              <button className="invite__btn no-print" onClick={() => window.print()}>Download Business Plan</button>
             </div>
+            {formSubmitted ? (
+              <div className="contact-form__success">
+                <h3>Thank you!</h3>
+                <p>We'll be in touch soon.</p>
+              </div>
+            ) : (
+              <form className="contact-form" name="contact" method="POST" data-netlify="true" onSubmit={handleContactSubmit}>
+                <input type="hidden" name="form-name" value="contact" />
+                <div className="contact-form__group">
+                  <label className="contact-form__label" htmlFor="name">Name</label>
+                  <input className="contact-form__input" type="text" id="name" name="name" required />
+                </div>
+                <div className="contact-form__group">
+                  <label className="contact-form__label" htmlFor="email">Email</label>
+                  <input className="contact-form__input" type="email" id="email" name="email" required />
+                </div>
+                <div className="contact-form__group">
+                  <label className="contact-form__label" htmlFor="interest">Interest</label>
+                  <select className="contact-form__select" id="interest" name="interest">
+                    <option value="Advisory Role">Advisory Role</option>
+                    <option value="Board Member">Board Member</option>
+                    <option value="Co-Founder">Co-Founder</option>
+                    <option value="Legal Consultation">Legal Consultation</option>
+                    <option value="Volunteer">Volunteer</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div className="contact-form__group">
+                  <label className="contact-form__label" htmlFor="message">Message</label>
+                  <textarea className="contact-form__textarea" id="message" name="message" rows="4" required />
+                </div>
+                <button className="contact-form__btn" type="submit">Send Message</button>
+              </form>
+            )}
+            <p className="invite__fallback">Or email directly: <a href="mailto:skdevv@att.net">skdevv@att.net</a></p>
           </div>
         </Section>
 
@@ -867,11 +914,6 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .proj-note p{font-size:.88rem;margin-bottom:0}
 
 /* INVITE CONTACT */
-.invite__contact{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin-top:1.25rem}
-.invite__btn{display:inline-block;padding:.6rem 1.5rem;background:var(--clay);color:var(--white);text-decoration:none;border-radius:6px;font-weight:600;font-size:.9rem;letter-spacing:.02em;transition:background .2s,transform .15s}
-.invite__btn:hover{background:var(--earth);transform:translateY(-1px)}
-.invite__btn--s{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.82rem;padding:.45rem 1.2rem}
-.invite__btn--s:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.35);color:var(--white);transform:translateY(-1px)}
 
 /* FOOTER */
 .foot{background:var(--charcoal);color:rgba(255,255,255,.45);padding:2.5rem var(--pad);text-align:center;font-size:.8rem}
@@ -905,7 +947,7 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .stats{grid-template-columns:repeat(4,1fr)}
 .bbox__list{display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1.5rem}
 .invite{padding:2rem}
-.invite__contact{flex-direction:row;gap:.8rem}
+
 .hero{padding:6rem 2rem 5rem}
 .proj-notes{grid-template-columns:1fr 1fr}
 .trust-grid{grid-template-columns:repeat(2,1fr)}
@@ -951,5 +993,63 @@ body{font-size:11pt;line-height:1.5}
 a{color:#3a3a38!important;text-decoration:underline}
 .foot{background:#fff!important;color:#3a3a38!important}
 .foot__brand{color:#3a3a38!important}
+.no-print{display:none!important}
 }
+
+/* THEME TOGGLE */
+.nav__theme{background:none;border:1px solid rgba(255,255,255,.2);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,.7);font-size:1rem;transition:border-color .2s,color .2s;margin-left:.5rem;flex-shrink:0}
+.nav__theme:hover{border-color:rgba(255,255,255,.4);color:var(--white)}
+
+/* CONTACT FORM */
+.contact-form{max-width:480px;margin:1.25rem auto 0;text-align:left}
+.contact-form__group{margin-bottom:.75rem}
+.contact-form__label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--earth);margin-bottom:.3rem}
+.contact-form__input,.contact-form__select,.contact-form__textarea{width:100%;padding:.6rem .8rem;border:1px solid var(--stone);border-radius:6px;font-family:var(--sans);font-size:.88rem;background:var(--white);color:var(--text);transition:border-color .2s}
+.contact-form__input:focus,.contact-form__select:focus,.contact-form__textarea:focus{border-color:var(--clay);outline:none}
+.contact-form__textarea{resize:vertical;min-height:80px}
+.contact-form__btn{width:100%;padding:.7rem;background:var(--clay);color:var(--white);border:none;border-radius:6px;font-family:var(--sans);font-weight:600;font-size:.9rem;cursor:pointer;transition:background .2s}
+.contact-form__btn:hover{background:var(--earth)}
+.contact-form__success{padding:1.5rem;text-align:center}
+.contact-form__success h3{color:var(--pine);margin-bottom:.3rem}
+.invite__fallback{margin-top:.75rem;font-size:.82rem;color:var(--text-lt);text-align:center}
+.invite__fallback a{color:var(--earth)}
+.invite__actions{margin-bottom:1rem}
+.invite__btn{display:inline-block;padding:.6rem 1.5rem;background:var(--clay);color:var(--white);text-decoration:none;border:none;border-radius:6px;font-weight:600;font-size:.9rem;letter-spacing:.02em;cursor:pointer;transition:background .2s,transform .15s;font-family:var(--sans)}
+.invite__btn:hover{background:var(--earth);transform:translateY(-1px)}
+
+/* DARK MODE */
+.theme--dark body{background:var(--charcoal);color:var(--sand)}
+.theme--dark .s:not(.s--d){background:var(--charcoal);color:var(--sand)}
+.theme--dark .s:not(.s--d) h2{color:var(--white)}
+.theme--dark .s:not(.s--d) h3{color:var(--sand)}
+.theme--dark .s:not(.s--d) .label{color:var(--clay)}
+.theme--dark .s:not(.s--d) .lead{color:rgba(245,240,232,.65)}
+.theme--dark .s:not(.s--d) p{color:rgba(245,240,232,.8)}
+.theme--dark .s:not(.s--d) .divider{background:var(--clay)}
+.theme--dark .s:not(.s--d) .card{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .card:hover{box-shadow:0 8px 28px rgba(0,0,0,.2)}
+.theme--dark .s:not(.s--d) .card__ic{background:rgba(196,149,106,.12)}
+.theme--dark .s:not(.s--d) .card h3{color:var(--sand)}
+.theme--dark .s:not(.s--d) .rc{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .rc__t{color:var(--sand)}
+.theme--dark .s:not(.s--d) .rc__n{color:var(--clay)}
+.theme--dark .s:not(.s--d) .rc__tag{background:rgba(122,158,126,.12);color:var(--sage)}
+.theme--dark .s:not(.s--d) .bbox{background:rgba(45,90,63,.15);border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .bbox--w{background:rgba(196,149,106,.1);border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .bbox h3{color:var(--sage)}
+.theme--dark .s:not(.s--d) .bbox--w h3{color:var(--clay)}
+.theme--dark .s:not(.s--d) .bbox__list li::before{color:var(--sage)}
+.theme--dark .s:not(.s--d) .bbox--w .bbox__list li::before{color:var(--clay)}
+.theme--dark .s:not(.s--d) .proj{border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .proj__row{border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .proj__total{background:rgba(255,255,255,.06)}
+.theme--dark .s:not(.s--d) .proj-note{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .proj-note h3{color:var(--sand)}
+.theme--dark .s:not(.s--d) .cr{border-color:rgba(255,255,255,.08)}
+.theme--dark .s:not(.s--d) .invite{border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.03)}
+.theme--dark .s:not(.s--d) .gallery__cap{color:rgba(245,240,232,.5)}
+.theme--dark .s:not(.s--d) .contact-form__input,.theme--dark .s:not(.s--d) .contact-form__select,.theme--dark .s:not(.s--d) .contact-form__textarea{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:var(--sand)}
+.theme--dark .s:not(.s--d) .contact-form__label{color:var(--clay)}
+.theme--dark .s:not(.s--d) .invite__fallback{color:rgba(245,240,232,.5)}
+.theme--dark .hero::after{background:linear-gradient(to top,var(--charcoal),transparent)}
 `
