@@ -84,8 +84,20 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [showTop, setShowTop] = useState(false)
+  const [formSubmitted, setFormSubmitted] = useState(false)
   const toggleDrawer = useCallback(() => setDrawerOpen(p => !p), [])
   const closeDrawer = useCallback(() => setDrawerOpen(false), [])
+
+  const handleContactSubmit = useCallback((e) => {
+    e.preventDefault()
+    const form = e.target
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString(),
+    }).then(() => setFormSubmitted(true))
+      .catch(() => setFormSubmitted(true))
+  }, [])
 
   useEffect(() => {
     const fn = () => { setScrolled(window.scrollY > 60); setShowTop(window.scrollY > 800) }
@@ -519,9 +531,40 @@ export default function App() {
             <h3>Your ideas belong here.</h3>
             <p>This plan is a starting point. If you see angles we've missed, structures that work better, or a different way to be involved — that's what we want to hear.</p>
             <p className="invite__cta">Advisory, board, co-founder, or one-time consult on legal structure — every option is on the table. We define this together.</p>
-            <div className="invite__contact">
-              <a href="mailto:skdevv@att.net" className="invite__btn">skdevv@att.net</a>
-            </div>
+            {formSubmitted ? (
+              <div className="contact-form__success">
+                <p>Thank you! We'll be in touch.</p>
+              </div>
+            ) : (
+              <form className="contact-form" name="contact" data-netlify="true" onSubmit={handleContactSubmit}>
+                <input type="hidden" name="form-name" value="contact" />
+                <div className="contact-form__group">
+                  <label className="contact-form__label" htmlFor="contact-name">Name</label>
+                  <input className="contact-form__input" type="text" id="contact-name" name="name" required />
+                </div>
+                <div className="contact-form__group">
+                  <label className="contact-form__label" htmlFor="contact-email">Email</label>
+                  <input className="contact-form__input" type="email" id="contact-email" name="email" required />
+                </div>
+                <div className="contact-form__group">
+                  <label className="contact-form__label" htmlFor="contact-interest">Interest</label>
+                  <select className="contact-form__select" id="contact-interest" name="interest">
+                    <option value="Advisory Role">Advisory Role</option>
+                    <option value="Board Member">Board Member</option>
+                    <option value="Co-Founder">Co-Founder</option>
+                    <option value="Legal Consultation">Legal Consultation</option>
+                    <option value="Volunteer">Volunteer</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div className="contact-form__group">
+                  <label className="contact-form__label" htmlFor="contact-message">Message</label>
+                  <textarea className="contact-form__textarea" id="contact-message" name="message" rows="4" required />
+                </div>
+                <button className="contact-form__btn" type="submit">Send Message</button>
+              </form>
+            )}
+            <p className="invite__fallback">Or email directly: <a href="mailto:skdevv@att.net">skdevv@att.net</a></p>
           </div>
         </Section>
 
@@ -742,12 +785,21 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .proj-note h3{font-size:1rem;margin-bottom:.6rem}
 .proj-note p{font-size:.88rem;margin-bottom:0}
 
-/* INVITE CONTACT */
-.invite__contact{display:flex;flex-direction:column;align-items:center;gap:.6rem;margin-top:1.25rem}
-.invite__btn{display:inline-block;padding:.6rem 1.5rem;background:var(--clay);color:var(--white);text-decoration:none;border-radius:6px;font-weight:600;font-size:.9rem;letter-spacing:.02em;transition:background .2s,transform .15s}
-.invite__btn:hover{background:var(--earth);transform:translateY(-1px)}
-.invite__btn--s{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.82rem;padding:.45rem 1.2rem}
-.invite__btn--s:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.35);color:var(--white);transform:translateY(-1px)}
+/* INVITE */
+.invite__fallback{margin-top:1rem;font-size:.85rem;color:var(--text-lt);text-align:center}
+.invite__fallback a{color:var(--clay);text-decoration:none;font-weight:600}
+.invite__fallback a:hover{text-decoration:underline}
+
+/* CONTACT FORM */
+.contact-form{max-width:480px;margin:1.5rem auto 0}
+.contact-form__group{margin-bottom:1rem}
+.contact-form__label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--earth);margin-bottom:.35rem}
+.contact-form__input,.contact-form__select,.contact-form__textarea{width:100%;padding:.65rem .85rem;border:1px solid var(--stone);border-radius:6px;font-family:inherit;font-size:.92rem;background:var(--white);color:var(--charcoal);transition:border-color .2s;box-sizing:border-box}
+.contact-form__input:focus,.contact-form__select:focus,.contact-form__textarea:focus{outline:none;border-color:var(--forest)}
+.contact-form__textarea{resize:vertical;min-height:100px}
+.contact-form__btn{display:block;width:100%;padding:.7rem 1.5rem;background:var(--clay);color:var(--white);border:none;border-radius:6px;font-family:inherit;font-weight:600;font-size:.95rem;letter-spacing:.02em;cursor:pointer;transition:background .2s,transform .15s}
+.contact-form__btn:hover{background:var(--earth);transform:translateY(-1px)}
+.contact-form__success{text-align:center;padding:2rem 1rem;font-size:1.05rem;font-weight:600;color:var(--forest)}
 
 /* FOOTER */
 .foot{background:var(--charcoal);color:rgba(255,255,255,.45);padding:2.5rem var(--pad);text-align:center;font-size:.8rem}
@@ -773,7 +825,6 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .stats{grid-template-columns:repeat(4,1fr)}
 .bbox__list{display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1.5rem}
 .invite{padding:2rem}
-.invite__contact{flex-direction:row;gap:.8rem}
 .hero{padding:6rem 2rem 5rem}
 .proj-notes{grid-template-columns:1fr 1fr}
 .trust-grid{grid-template-columns:repeat(2,1fr)}
