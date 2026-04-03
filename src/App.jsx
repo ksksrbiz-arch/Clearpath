@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 
 /* ─── CONFIG ─── */
 const VENTURE_NAME = "ClearPath Environmental"
@@ -78,10 +78,6 @@ function Section({ children, id, dark }) {
   )
 }
 
-function Stat({ number, label }) {
-  return (<div className="stat"><span className="stat__n">{number}</span><span className="stat__l">{label}</span></div>)
-}
-
 function Card({ icon, title, children }) {
   return (
     <div className="card">
@@ -133,16 +129,17 @@ export default function App() {
   const [showTop, setShowTop] = useState(false)
   const [activeSection, setActiveSection] = useState('')
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('theme') === 'dark')
-  const [formSubmitted, setFormSubmitted] = useState(false)
+  const [formStatus, setFormStatus] = useState('idle') // idle | submitting | success | error
   const toggleDrawer = useCallback(() => setDrawerOpen(p => !p), [])
   const closeDrawer = useCallback(() => setDrawerOpen(false), [])
   const toggleTheme = useCallback(() => setDarkMode(p => !p), [])
   const handleContactSubmit = useCallback((e) => {
     e.preventDefault()
+    setFormStatus('submitting')
     const form = e.target
     fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
-      .then(() => setFormSubmitted(true))
-      .catch(() => setFormSubmitted(true))
+      .then(() => setFormStatus('success'))
+      .catch(() => setFormStatus('error'))
   }, [])
 
   useEffect(() => {
@@ -602,7 +599,7 @@ export default function App() {
             <div className="invite__actions">
               <button className="invite__btn no-print" onClick={() => window.print()}>Download Business Plan</button>
             </div>
-            {formSubmitted ? (
+            {formStatus === 'success' ? (
               <div className="contact-form__success">
                 <h3>Thank you!</h3>
                 <p>We'll be in touch soon.</p>
@@ -633,7 +630,8 @@ export default function App() {
                   <label className="contact-form__label" htmlFor="message">Message</label>
                   <textarea className="contact-form__textarea" id="message" name="message" rows="4" required />
                 </div>
-                <button className="contact-form__btn" type="submit">Send Message</button>
+                {formStatus === 'error' && <p className="contact-form__error">Something went wrong. Please try again or email us directly.</p>}
+                <button className="contact-form__btn" type="submit" disabled={formStatus === 'submitting'}>{formStatus === 'submitting' ? 'Sending...' : 'Send Message'}</button>
               </form>
             )}
             <p className="invite__fallback">Or email directly: <a href="mailto:skdevv@att.net">skdevv@att.net</a></p>
@@ -864,6 +862,7 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .gallery__img--3{background:linear-gradient(135deg,#2d5a3f 0%,#4a7a5a 50%,#3a6a4a 100%);background-image:url('/images/volunteer-cleanup.jpg')}
 .gallery__img--4{background:linear-gradient(135deg,#1a4a2a 0%,#3a6a4a 50%,#2a5a3a 100%);background-image:url('/images/clean-roadside.jpg')}
 .gallery__cap{display:block;padding:.5rem .1rem;font-size:.72rem;color:var(--text-lt);text-align:center}
+.s--d .gallery__cap{color:rgba(245,240,232,.5)}
 
 /* TRUST SOURCES */
 .trust-sources{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08)}
@@ -874,7 +873,6 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .trust-link:hover{transform:translateY(-2px);background:rgba(255,255,255,.08)}
 .trust-link__org{font-family:var(--serif);font-size:.9rem;color:var(--clay);white-space:nowrap;min-width:90px}
 .trust-link__desc{font-size:.78rem;color:rgba(245,240,232,.5);line-height:1.35}
-.gallery__cap{color:rgba(245,240,232,.5)}
 
 /* THE FILES */
 .files{margin-top:1.5rem;display:flex;flex-direction:column;gap:2rem}
@@ -887,7 +885,8 @@ p{margin-bottom:.8rem}.s--d p{color:rgba(245,240,232,.8)}
 .file-link__sub{display:block;font-size:.75rem;color:rgba(245,240,232,.45);line-height:1.4;margin-top:.15rem}
 
 /* INVITE */
-.invite{background:rgba(255,255,255,.03);border:2px dashed rgba(255,255,255,.12);border-radius:12px;padding:1.5rem;margin-top:1.5rem;text-align:center}
+.invite{background:rgba(45,90,63,.04);border:2px dashed rgba(45,90,63,.15);border-radius:12px;padding:1.5rem;margin-top:1.5rem;text-align:center}
+.s--d .invite{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.12)}
 .invite h3{font-size:1.2rem;margin-bottom:.5rem}
 .invite p{max-width:540px;margin:0 auto .5rem;font-size:.92rem}
 .invite__cta{font-weight:600!important;color:var(--clay)!important}
@@ -1029,6 +1028,8 @@ a{color:#3a3a38!important;text-decoration:underline}
 .contact-form__textarea{resize:vertical;min-height:80px}
 .contact-form__btn{width:100%;padding:.7rem;background:var(--clay);color:var(--white);border:none;border-radius:6px;font-family:var(--sans);font-weight:600;font-size:.9rem;cursor:pointer;transition:background .2s}
 .contact-form__btn:hover{background:var(--earth)}
+.contact-form__btn:disabled{opacity:.6;cursor:not-allowed}
+.contact-form__error{color:#c0392b;font-size:.85rem;margin-bottom:.5rem;text-align:center}
 .contact-form__success{padding:1.5rem;text-align:center}
 .contact-form__success h3{color:var(--pine);margin-bottom:.3rem}
 .invite__fallback{margin-top:.75rem;font-size:.82rem;color:var(--text-lt);text-align:center}
@@ -1067,6 +1068,7 @@ a{color:#3a3a38!important;text-decoration:underline}
 .theme--dark .s:not(.s--d) .proj-note h3{color:var(--sand)}
 .theme--dark .s:not(.s--d) .cr{border-color:rgba(255,255,255,.08)}
 .theme--dark .s:not(.s--d) .invite{border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.03)}
+.theme--dark .s:not(.s--d) .contact-form__error{color:#e74c3c}
 .theme--dark .s:not(.s--d) .gallery__cap{color:rgba(245,240,232,.5)}
 .theme--dark .s:not(.s--d) .contact-form__input,.theme--dark .s:not(.s--d) .contact-form__select,.theme--dark .s:not(.s--d) .contact-form__textarea{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:var(--sand)}
 .theme--dark .s:not(.s--d) .contact-form__label{color:var(--clay)}
