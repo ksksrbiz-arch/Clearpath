@@ -1,0 +1,14 @@
+node_modules
+dist
+dist-ssr
+.git
+.gitignore
+.claude
+.claude/worktrees/
+.vscode
+.idea
+*.md
+!README.md
+*.log
+.DS_Store
+.env*
