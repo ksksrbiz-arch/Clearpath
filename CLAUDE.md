@@ -12,6 +12,7 @@ ClearPath Environmental is a single-page marketing/business-plan website for an 
 - **Build tool:** Vite 8.0.1 with `@vitejs/plugin-react`
 - **Linting:** ESLint 9 (flat config) with react-hooks and react-refresh plugins
 - **Hosting:** Netlify (SPA mode, all routes redirect to `/index.html`)
+- **Containers:** Docker (multi-stage build with nginx)
 - **Styling:** Inline CSS with CSS custom properties (no CSS framework)
 - **Fonts:** Google Fonts (DM Serif Display + Source Sans 3)
 
@@ -38,6 +39,12 @@ npm run dev          # Start Vite dev server
 npm run build        # Production build (output: dist/)
 npm run preview      # Preview production build locally
 npm run lint         # Run ESLint
+
+# Docker
+docker build -t clearpath .         # Build production image
+docker run -p 3000:80 clearpath     # Run production container
+docker compose up web               # Run production via compose (port 3000)
+docker compose --profile dev up dev # Run Vite dev server in container (port 5173)
 ```
 
 ## Architecture
@@ -73,6 +80,9 @@ Netlify auto-builds on push to `main`:
 - Publish directory: `dist`
 - Security headers configured (X-Frame-Options, CSP-adjacent policies)
 - Site ID: `0202e798-6027-4492-85b6-06580108bd21`
+
+### Docker (alternative)
+Multi-stage build: Node 22 Alpine (build) → nginx Alpine (serve). The nginx config replicates Netlify's SPA routing and security headers. Production image serves on port 80.
 
 ## Known Issues
 
