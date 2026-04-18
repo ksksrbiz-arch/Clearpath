@@ -19,22 +19,87 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <!-- Analytics: uncomment after signing up at https://plausible.io and verifying domain -->
-    <!-- <script defer data-domain="clearpath-environmental.netlify.app" src="https://plausible.io/js/script.js"></script> -->
+    <!-- Plausible Analytics — privacy-friendly, cookie-free -->
+    <script async src="https://plausible.io/js/pa-SMw2-ywQPeiG-CihXqa2Z.js"></script>
+    <script>
+      window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+      plausible.init()
+    </script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "ClearPath Environmental",
       "description": "Community-rooted environmental services for Oregon City, Clackamas County, and the greater Portland metro.",
-      "areaServed": "Portland Metro, Oregon",
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Oregon City",
+          "containedInPlace": { "@type": "State", "name": "Oregon" }
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Clackamas County, Oregon"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Portland Metro, Oregon"
+        }
+      ],
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Oregon City",
         "addressRegion": "OR",
         "addressCountry": "US"
       },
-      "url": "https://clearpath-environmental.netlify.app/"
+      "url": "https://clearpath-environmental.netlify.app/",
+      "email": "skdevv@att.net",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Environmental Cleanup Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Roadside & Highway Cleanup",
+              "description": "Professional litter removal and maintenance for highways, roadsides, and public right-of-ways."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Park & Public Land Restoration",
+              "description": "Cleanup and restoration of parks, trails, and wooded public lands."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Illegal Dump Site Remediation",
+              "description": "Assessment, cleanup, and documentation of illegal dumping sites on public and private land."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Private Property Cleanup",
+              "description": "Commercial lot, perimeter, and right-of-way cleanup for property managers, HOAs, and business districts."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Material Recovery & Recycling",
+              "description": "Sorting and redemption of recyclable materials including Oregon Bottle Bill containers and scrap metal."
+            }
+          }
+        ]
+      }
     }
     </script>
   </head>
